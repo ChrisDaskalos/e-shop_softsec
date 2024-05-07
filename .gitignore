@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django-specific files
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Virtual environment
+venv/
+.env
+
+# Media files
+/media/
+
+# Static files
+/static/
+
+# Node modules and Angular build artifacts
+node_modules/
+/dist/
+
+# IDE specific
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
