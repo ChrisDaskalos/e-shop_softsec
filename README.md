@@ -10,11 +10,13 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software:
 
-**- Python 3.8+
+**
+- Python 3.8+
 - PostgreSQL
 - Node.js 12.x+
 - pgAdmin
-- Angular CLI**
+- Angular CLI
+**
 
 ### Installing
 
@@ -35,7 +37,7 @@ What things you need to install the software:
    
     pip install -r requirements.txt
 
-4.** Migrate the database:**
+4. **Migrate the database:**
 
     python manage.py migrate
 
@@ -57,7 +59,7 @@ What things you need to install the software:
    
     ng serve
 
-7. **Navigate **
+7. **Navigate**
    
      http://127.0.0.1:8000/ to view the site in your browser.
 
