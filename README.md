@@ -32,25 +32,32 @@ What things you need to install the software:
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
 
 3. **Install the required Python packages:**
+   
     pip install -r requirements.txt
 
 4.** Migrate the database:**
+
     python manage.py migrate
 
 5. **Run the development server:**
-python manage.py runserver
+   
+   python manage.py runserver
 
 #### Setting up the Frontend (Angular)
 
 1. **Navigate to the Angular application directory:**
+   
     cd eshopapp_ang
 
-2. **Install the required Node packages:**
+3. **Install the required Node packages:**
+   
     npm install
 
-3. **Serve the application:**
+5. **Serve the application:**
+   
     ng serve
 
-4. **Navigate **
+7. **Navigate **
+   
      http://127.0.0.1:8000/ to view the site in your browser.
 
