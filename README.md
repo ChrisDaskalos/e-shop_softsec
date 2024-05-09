@@ -11,10 +11,10 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software:
 
 
-- Python 3.8+
-- PostgreSQL
+- Python 3.11.2
+- PostgreSQL 13+ (psqlODBC)
 - Node.js 12.x+
-- pgAdmin
+- pgAdmin 8.6
 - Angular CLI
 
 
@@ -44,6 +44,10 @@ What things you need to install the software:
 5. **Run the development server:**
    
    `python manage.py runserver`
+
+6. **Run the ssl server:**
+
+    `python manage.py runsslserver`
 
 #### Setting up the Frontend (Angular)
 
