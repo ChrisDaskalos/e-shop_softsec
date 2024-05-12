@@ -1,37 +1,39 @@
 from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth import login, authenticate
-from .forms import SignUpForm, LogInForm
+from .forms import CustomUserCreationForm  # Custom sign-up form
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 
+def unified_view(request):
+    signup_form = CustomUserCreationForm()
+    login_form = AuthenticationForm()
 
-def hello_world(request):
-    return render(request, 'eshopapp/home.html')
-
-
-def log_in(request):
     if request.method == 'POST':
-        form = LogInForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data['email']
-            password = form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('home')  # Replace 'index' with your desired redirect URL
-            else:
-                messages.error(request, 'Invalid email or password.')
-    else:
-        form = LogInForm()
-    return render(request, 'login.html', {'form': form})
+        if 'signup' in request.POST:
+            signup_form = CustomUserCreationForm(request.POST)
+            if signup_form.is_valid():
+                user = signup_form.save()
+                auth_login(request, user)
+                return redirect('welcome')  # Redirect to welcome page after successful signup
+        elif 'login' in request.POST:
+            login_form = AuthenticationForm(request, data=request.POST)
+            if login_form.is_valid():
+                user = authenticate(username=login_form.cleaned_data['username'], 
+                                    password=login_form.cleaned_data['password'])
+                if user is not None:
+                    auth_login(request, user)
+                    return redirect('welcome')  # Redirect to welcome page after successful login
 
+    return render(request, 'unified.html', {
+        'signup_form': signup_form,
+        'login_form': login_form,
+    })
 
-def sign_up(request):
-    if request.method == 'POST':
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('home')  # Replace 'index' with your desired redirect URL
-    else:
-        form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+@login_required
+def welcome_view(request):
+    # Render the welcome page and include user information
+    return render(request, 'welcome.html', {'user': request.user})
+
+def logout_view(request):
+    auth_logout(request)
+    return redirect('unified')  # Redirect to unified view after logging out

@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'sslserver'
+    'sslserver',
+    'eshopapp'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = 'eshoptest.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'eshopapp', 'templates_eshop')],  # Add your template directory here
+        'DIRS': [os.path.join(BASE_DIR, 'eshopapp', 'templates_eshop')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -69,6 +70,7 @@ TEMPLATES = [
 ]
 
 
+
 WSGI_APPLICATION = 'eshoptest.wsgi.application'
 
 
@@ -80,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'eshopdb',
         'USER': 'eshopuser',
-        'PASSWORD': 'peppass123',
+        'PASSWORD': '1234',
         'HOST': 'localhost',  # This should match the service name in docker-compose.yml
         'PORT': '5432',
     }
@@ -105,6 +107,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'eshopapp.CustomUser'
 
 
 # Internationalization
