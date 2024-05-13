@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Unified Page</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <h2>Login</h2>
+        <form method="post" action="{% url 'unified' %}">
+            {% csrf_token %}
+            {{ login_form.as_p }}
+            <button type="submit" name="login">Login</button>
+        </form>
+        
+        <h2>Sign Up</h2>
+        <form method="post" action="{% url 'unified' %}">
+            {% csrf_token %}
+            {{ signup_form.as_p }}
+            <!-- Display form errors if there are any -->
+            {% if signup_form.non_field_errors %}
+                <div style="color: red;">
+                    {% for error in signup_form.non_field_errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <button type="submit" name="signup">Sign Up</button>
+        </form>
+    {% endif %}
+</body>
+</html>
