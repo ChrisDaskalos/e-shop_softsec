@@ -4,4 +4,6 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('eshopapp.urls')),  # Change this to point to the root
+    path('products/', include('products.urls')),
+
 ]

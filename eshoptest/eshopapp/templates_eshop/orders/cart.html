@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <style>
+        body {
+            background: #f0f0f0;
+            color: #333;
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .cart-items {
+            width: 60%;
+            margin: 20px 0;
+        }
+        .cart-item {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .checkout-button {
+            background: #b5cd60;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+        .checkout-button:hover {
+            background: #16aa56;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <div class="cart-items">
+        {% for item in cart_items %}
+            <div class="cart-item">
+                <p>{{ item }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <a href="{% url 'checkout' %}" class="checkout-button">Proceed to Checkout</a>
+</body>
+</html>

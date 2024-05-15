@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
+    <style>
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .cart-items {
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 16px;
+        }
+        .btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if user.is_authenticated %}
+            <h1>Checkout</h1>
+            <h2>Order Summary</h2>
+            <div class="cart-items">
+                {% for order_item in order.items.all %}
+                    <div class="cart-item">
+                        <div>{{ order_item.item.title }} ({{ order_item.quantity }})</div>
+                        <div>${{ order_item.get_total_item_price }}</div>
+                    </div>
+                {% endfor %}
+                <div class="cart-item">
+                    <div><strong>Total</strong></div>
+                    <div><strong>${{ order.get_total }}</strong></div>
+                </div>
+            </div>
+            <h2>Shipping/Billing Details</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="street_address">Street Address</label>
+                    {{ form.street_address }}
+                </div>
+                <div class="form-group">
+                    <label for="apartment_address">Apartment Address</label>
+                    {{ form.apartment_address }}
+                </div>
+                <div class="form-group">
+                    <label for="country">Country</label>
+                    {{ form.country }}
+                </div>
+                <div class="form-group">
+                    <label for="zip">ZIP Code</label>
+                    {{ form.zip }}
+                </div>
+                <div class="form-group">
+                    <label for="same_shipping_address">Same Shipping Address</label>
+                    {{ form.same_shipping_address }}
+                </div>
+                <div class="form-group">
+                    <label for="save_info">Save Info</label>
+                    {{ form.save_info }}
+                </div>
+                <button type="submit" class="btn">Place Order</button>
+            </form>
+        {% else %}
+            <p>You must be logged in to view this page.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
