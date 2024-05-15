@@ -14,7 +14,7 @@ def unified_view(request):
             if signup_form.is_valid():
                 user = signup_form.save()
                 auth_login(request, user)
-                return redirect('welcome')  # Redirect to welcome page after successful signup
+                return redirect('checkout')  # Redirect to welcome page after successful signup
         elif 'login' in request.POST:
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
@@ -22,7 +22,7 @@ def unified_view(request):
                                     password=login_form.cleaned_data['password'])
                 if user is not None:
                     auth_login(request, user)
-                    return redirect('welcome')  # Redirect to welcome page after successful login
+                    return redirect('checkout')  # Redirect to welcome page after successful login
 
     return render(request, 'unified.html', {
         'signup_form': signup_form,
