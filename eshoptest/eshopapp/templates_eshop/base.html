@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Title{% endblock %}</title>
+    <style>
+        /* General Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Arial", sans-serif; /* Change to Arial */
+            font-size: 16px;
+            font-weight: 400; /* Adjust font weight */
+            line-height: 1.6;
+            background: #f0f0f0; /* Light gray background */
+            color: #606468;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form Styles */
+        .form-box {
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 800px; /* Maximum width for the form box */
+            width: 100%; /* Ensure the form box takes up the available width */
+            background: #fff; /* White background */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Minimal shadow */
+            margin: 0 auto; /* Center the form box horizontally */
+        }
+
+
+        h2 {
+            text-align: center; /* Center title */
+            margin-bottom: 20px; /* Add space below title */
+            color: #444; /* Darker gray */
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px 16px; /* Adjust padding */
+            width: 100%; /* Full width */
+            margin-bottom: 20px; /* Add space below inputs */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 4px;
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            color: #888; /* Darker gray placeholder */
+        }
+
+        .btn {
+            padding: 10px 16px; /* Adjust padding */
+            font-size: 16px; /* Adjust font size */
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+            background: #b5cd60; /* Green background */
+            color: white;
+            border: none;
+            width: 100%; /* Full width button */
+        }
+
+        .btn:hover {
+            background: #16aa56; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-box">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

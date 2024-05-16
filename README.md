@@ -49,21 +49,5 @@ What things you need to install the software:
 
     `python manage.py runsslserver`
 
-#### Setting up the Frontend (Angular)
 
-1. **Navigate to the Angular application directory:**
-   
-    `cd eshopapp_ang`
-
-3. **Install the required Node packages:**
-   
-   `npm install`
-
-5. **Serve the application:**
-   
-    `ng serve`
-
-7. **Navigate**
-   
-     `http://127.0.0.1:8000/` to view the site in your browser.
 
