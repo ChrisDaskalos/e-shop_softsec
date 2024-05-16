@@ -1,13 +1,25 @@
+# products/views.py
+
 from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View
-from django.shortcuts import redirect
 from django.utils import timezone
 from .forms import CheckoutForm
 from .models import Item, OrderItem, Order, BillingAddress
+
+@login_required
+def product_list(request):
+    products = Item.objects.filter(is_active=True)
+    try:
+        order = Order.objects.get(user=request.user, ordered=False)
+    except Order.DoesNotExist:
+        order = None
+    return render(request, 'product_list.html', {'products': products, 'order': order})
+
+# Other views remain unchanged
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -22,17 +34,15 @@ class OrderSummaryView(LoginRequiredMixin, View):
             messages.error(self.request, "You do not have an active order")
             return redirect("/")
 
-
 class ItemDetailView(DetailView):
     model = Item
     template_name = "product-detail.html"
-    
 
 @login_required
 def checkout_view(request):
     user = request.user
     try:
-        order = Order.objects.get(user=user)
+        order = Order.objects.get(user=user, ordered=False)
     except Order.DoesNotExist:
         order = None
 
@@ -47,11 +57,11 @@ def checkout_view(request):
 
     return render(request, 'checkout.html', {'order': order, 'form': form})
 
-        
+
 
 @login_required
-def add_to_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
+def add_to_cart(request, pk):
+    item = get_object_or_404(Item, pk=pk)
     order_item, created = OrderItem.objects.get_or_create(
         item=item,
         user=request.user,
@@ -60,49 +70,49 @@ def add_to_cart(request, slug):
     order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        if order.items.filter(item__slug=item.slug).exists():
+        if order.items.filter(item__pk=item.pk).exists():
             order_item.quantity += 1
             order_item.save()
-            messages.info(request, "Item qty was updated.")
-            return redirect("products:order-summary")
+            messages.info(request, "Item quantity was updated.")
         else:
             order.items.add(order_item)
             messages.info(request, "Item was added to your cart.")
-            return redirect("products:order-summary")
     else:
         ordered_date = timezone.now()
-        order = Order.objects.create(
-            user=request.user, ordered_date=ordered_date)
+        order = Order.objects.create(user=request.user, ordered_date=ordered_date)
         order.items.add(order_item)
         messages.info(request, "Item was added to your cart.")
-    return redirect("products:order-summary")
-
+    return redirect("products:product_list")
 
 @login_required
-def remove_from_cart(request, slug):
-    item = get_object_or_404(Item, slug=slug)
-    order_qs = Order.objects.filter(
-        user=request.user,
-        ordered=False)
+def remove_from_cart(request, pk):
+    item = get_object_or_404(Item, pk=pk)
+    order_qs = Order.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
-        # check if the order item is in the order
-        if order.items.filter(item__slug=item.slug).exists():
+        if order.items.filter(item__pk=item.pk).exists():
             order_item = OrderItem.objects.filter(
                 item=item,
                 user=request.user,
                 ordered=False
             )[0]
             order.items.remove(order_item)
+            order_item.delete()
             messages.info(request, "Item was removed from your cart.")
-            return redirect("products:order-summary")
         else:
-            # add a message saying the user dosent have an order
-            messages.info(request, "Item was not in your cart.")
-            return redirect("products:product", slug=slug)
+            messages.info(request, "This item was not in your cart")
     else:
-        # add a message saying the user dosent have an order
-        messages.info(request, "u don't have an active order.")
-    return redirect("products:product", slug=slug)
+        messages.info(request, "You do not have an active order")
+    return redirect("products:product_list")
 
-
+@login_required
+def order_summary(request):
+    try:
+        order = Order.objects.get(user=request.user, ordered=False)
+        context = {
+            'order': order
+        }
+        return render(request, 'order_summary.html', context)
+    except Order.DoesNotExist:
+        messages.info(request, "You do not have an active order")
+        return redirect("/")

@@ -1,3 +1,5 @@
+# eshopapp/views.py
+
 from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm  # Custom sign-up form
 from django.contrib.auth.forms import AuthenticationForm
@@ -15,7 +17,7 @@ def unified_view(request):
                                 password=login_form.cleaned_data['password'])
             if user is not None:
                 auth_login(request, user)
-                return redirect('checkout')  # Redirect to welcome page after successful login
+                return redirect('products:product_list')  # Redirect to product list after successful login
 
     return render(request, 'unified.html', {
         'login_form': login_form,

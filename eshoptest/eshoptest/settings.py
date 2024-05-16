@@ -91,6 +91,7 @@ DATABASES = {
 
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -110,6 +111,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'eshopapp.CustomUser'
+# eshoptest/settings.py
+
+LOGIN_REDIRECT_URL = '/products/'
 
 
 # Internationalization
