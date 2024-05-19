@@ -2,18 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
     <style>
         body {
-            background: #f0f0f0; /* Change background to light gray */
+            background: #f0f0f0;
             color: #606468;
             font: 87.5%/1.5em 'Open Sans', sans-serif;
             margin: 0;
             display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Full viewport height */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         input {
@@ -30,75 +31,76 @@
         }
 
         #login form {
-        padding: 22px 22px 22px 22px;
-        width: 85%;
-        border-radius: 5px;
-        background: #fff; /* Change background to white */
-        border-top: 3px solid #b5cd60; /* Green border top */
-        border-bottom: 3px solid #b5cd60; /* Green border bottom */
-        display: flex;
-        flex-direction: column; /* Align items vertically */
-        align-items: center; /* Center items horizontally */
+            padding: 22px;
+            width: 100%;
+            border-radius: 5px;
+            background: #fff;
+            border-top: 3px solid #b5cd60;
+            border-bottom: 3px solid #b5cd60;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        #login form span {
-            background-color: #b5cd60; /* Green */
-            border-radius: 3px 0px 0px 3px;
-            border-right: 3px solid #b5cd60; /* Green */
-            color: #fff; /* White */
+        #login form h2 {
+            margin-bottom: 20px;
+            color: #444;
+        }
+
+        #login form p {
+            width: 100%;
+            margin-bottom: 1em;
+        }
+
+        #login form label {
             display: block;
-            float: left;
-            line-height: 50px;
-            text-align: center;
-            width: 50px;
-            height: 50px;
+            margin-bottom: 0.5em;
+            color: #606468;
         }
 
         #login form input[type="text"],
         #login form input[type="password"],
         #login form button[type="submit"] {
-            background-color: #f0f0f0; /* Light gray */
-            border-radius: 0px 3px 3px 0px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
             color: #606468;
-            margin-bottom: 1em;
             padding: 0 16px;
-            width: 235px;
-            height: 50px;
+            width: 90%; /* Reduced width */
+            height: 40px; /* Reduced height */
+            max-width: 280px; /* Ensure max width */
         }
 
         #login form button[type="submit"] {
-            background: #b5cd60; /* Green */
+            background: #b5cd60;
             border: 0;
-            width: 235px; /* Same width as input fields */
-            height: 50px; /* Match height with input fields */
-            border-radius: 0px 3px 3px 0px; /* Rounded border */
             color: white;
             cursor: pointer;
             transition: background 0.3s ease-in-out;
-            font-size: 18px; /* Increase font size */
-            font-weight: bold; /* Make text bold */
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px; /* Add margin top */
         }
+
         #login form button[type="submit"]:hover {
-            background: #16aa56; /* Darker green on hover */
+            background: #16aa56;
         }
     </style>
 </head>
 <body>
-    {% if user.is_authenticated %}
-        <p>Welcome, {{ user.username }}!</p>
-        <form action="{% url 'logout' %}" method="post">
+    <div id="login">
+        <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
-            <button type="submit">Logout</button>
-        </form>
-    {% else %}
-        <div id="login">
             <h2>Login</h2>
-            <form method="post" action="{% url 'unified' %}">
-                {% csrf_token %}
-                {{ login_form.as_p }}
-                <button type="submit" name="login">Login</button>
-            </form>
-        </div>
-    {% endif %}
+            <p>
+                <label for="id_username">Email address:</label>
+                {{ login_form.username }}
+            </p>
+            <p>
+                <label for="id_password">Password:</label>
+                {{ login_form.password }}
+            </p>
+            <button type="submit" name="login">Login</button>
+        </form>
+    </div>
 </body>
 </html>

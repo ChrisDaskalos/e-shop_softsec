@@ -7,7 +7,6 @@ from .models import Item
    display format for the model's fields in the admin panel.
    """
 
-
 @admin.register(Item)
 class ItemAdmin(admin.ModelAdmin):
     list_display = ('title', 'price', 'is_active')

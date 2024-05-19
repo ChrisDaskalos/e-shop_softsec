@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Order Confirmation{% endblock %}
+
+{% block content %}
+    <div class="confirmation-box" style="padding: 20px;">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order!</p>
+        <h3>Order Summary</h3>
+        <ul>
+            {% for order_item in order.items.all %}
+                <li>{{ order_item.item.title }} ({{ order_item.quantity }}): ${{ order_item.get_total_item_price }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total: ${{ order.get_total }}</strong></p>
+        <h3>Billing Details</h3>
+        <p>{{ order.billing_address.street_address }}<br>
+           {{ order.billing_address.apartment_address }}<br>
+           {{ order.billing_address.country }}<br>
+           {{ order.billing_address.zip }}</p>
+    </div>
+{% endblock %}

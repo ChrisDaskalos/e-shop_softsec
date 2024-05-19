@@ -2,32 +2,43 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model  # Import get_user_model
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View
 from django.utils import timezone
 from .forms import CheckoutForm
 from .models import Item, OrderItem, Order, BillingAddress
+from django.template.loader import render_to_string
+from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 
 @login_required
 def product_list(request):
-    """
-    View for displaying a list of products available for purchase.
-    Retrieves active products from the database and renders them on the product list template.
-    If the user has an active order, it retrieves the order to display alongside the products.
-    Returns:
-        HttpResponse: Rendered product list template with products and user's active order.
-    """
-    # querying active products from the database
-    products = Item.objects.filter(is_active=True)
+    query = request.GET.get('q')
+    if query:
+        products = Item.objects.filter(title__icontains=query, is_active=True)
+    else:
+        products = Item.objects.filter(is_active=True)
+    
     try:
-        # Trying to get the user's active order
         order = Order.objects.get(user=request.user, ordered=False)
-    # Handling the case if the order does not exist
     except Order.DoesNotExist:
         order = None
-    # Rendering the product list template with products and order
-    return render(request, 'product_list.html', {'products': products, 'order': order})
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        html = render_to_string('partials/product_list_partial.html', {'products': products, 'order': order}, request=request)
+        return JsonResponse({'html': html})
+
+    # Debugging lines
+    print(request.user.is_authenticated)  # This should print True if the user is authenticated
+    print(request.user)  # Ensure user object is available
+    print(get_user_model().objects.filter(email=request.user.email))  # Ensure user exists in the database
+    print(request.user.email)  # Debugging line to ensure email is available
+
+    return render(request, 'product_list.html', {'products': products, 'order': order, 'user': request.user})
 
 
 class OrderSummaryView(LoginRequiredMixin, View):
@@ -73,36 +84,48 @@ class ItemDetailView(DetailView):
 
 @login_required
 def checkout_view(request):
-    """
-   View for handling the checkout process.
-
-   Retrieves the user's active order and renders the checkout template with the checkout form.
-   Processes the form data upon submission and redirects to the order confirmation page.
-
-   Returns:
-       HttpResponse: Rendered checkout template with the checkout form.
-   """
-    # Getting the current user
     user = request.user
     try:
-        # Trying to get the user's active order
         order = Order.objects.get(user=user, ordered=False)
-    # Handling the case if the order does not exist
     except Order.DoesNotExist:
         order = None
 
     if request.method == 'POST':
-        # Creating a form instance with POST data
         form = CheckoutForm(request.POST)
         if form.is_valid():
-            # Process the form data and save the shipping details
-            # Redirect to a confirmation page or perform any other actions
-            return redirect('order_confirmation')
-    # Handling the case if the request method is not POST
+            if not order:
+                order = Order(user=user, ordered=False, start_date=timezone.now())
+                order.save()
+
+            # Save the form data to the order's billing address
+            billing_address = BillingAddress(
+                user=user,
+                street_address=form.cleaned_data.get('street_address'),
+                apartment_address=form.cleaned_data.get('apartment_address'),
+                country=form.cleaned_data.get('country'),
+                zip=form.cleaned_data.get('zip'),
+                address_type='B'
+            )
+            billing_address.save()
+            order.billing_address = billing_address
+            order.ordered = True
+            order.ordered_date = timezone.now()
+            order.save()
+
+            # Send confirmation email
+            subject = 'Order Confirmation'
+            plain_message = 'Thank you for your order!'
+            from_email = 'from@example.com'
+            to_email = user.email
+            html_message = render_to_string('order_confirmation_email.html', {'order': order})
+            send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+
+            return redirect('products:order_confirmation')
     else:
         form = CheckoutForm()
 
     return render(request, 'checkout.html', {'order': order, 'form': form})
+
 
 
 @login_required
@@ -205,3 +228,8 @@ def order_summary(request):
     except Order.DoesNotExist:
         messages.info(request, "You do not have an active order")
         return redirect("/")
+
+def order_confirmation(request):
+    user = request.user
+    order = Order.objects.filter(user=user, ordered=True).latest('ordered_date')
+    return render(request, 'order_confirmation.html', {'order': order})

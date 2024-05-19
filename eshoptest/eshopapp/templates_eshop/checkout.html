@@ -1,46 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="container" style="width: 100%; padding: 40px; margin: 0 auto;"> <!-- Doubled the width to 120% -->
-        <h1>Checkout</h1>
-        <h2>Order Summary</h2>
-        <div class="cart-items">
+    <div class="form-box" style="padding: 20px; max-width: 600px;">
+        <h2>Checkout</h2>
+        <h3>Order Summary</h3>
+        <div class="cart-items" style="border-bottom: 2px solid #ccc; padding-bottom: 15px; margin-bottom: 15px;">
             {% for order_item in order.items.all %}
-                <div class="cart-item">
-                    <div>{{ order_item.item.title }} ({{ order_item.quantity }})</div>
-                    <div>${{ order_item.get_total_item_price }}</div>
+                <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid #e0e0e0;">
+                    <div style="display: flex; align-items: center;">
+                        <img src="{{ order_item.item.image.url }}" alt="{{ order_item.item.title }}" style="width: 40px; height: auto; margin-right: 10px;">
+                        <span>{{ order_item.item.title }} ({{ order_item.quantity }})</span>
+                    </div>
+                    <div style="font-weight: bold; color: #28a745;">${{ order_item.get_total_item_price }}</div>
                 </div>
             {% endfor %}
-            <div class="cart-item">
-                <div><strong>Total</strong></div>
-                <div><strong>${{ order.get_total }}</strong></div>
+            <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-weight: bold; font-size: 16px; background-color: #f8f9fa; border-radius: 4px;">
+                <div>Total</div>
+                <div>${{ order.get_total }}</div>
             </div>
         </div>
-        <h2>Shipping/Billing Details</h2>
+        <h3>Shipping/Billing Details</h3>
         <form method="POST">
             {% csrf_token %}
-            <div class="form-group">
-                <label for="street_address">Street Address</label>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="street_address" style="display: block; margin-bottom: 5px;">Street Address</label>
                 {{ form.street_address }}
             </div>
-            <div class="form-group">
-                <label for="apartment_address">Apartment Address</label>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="apartment_address" style="display: block; margin-bottom: 5px;">Apartment Address</label>
                 {{ form.apartment_address }}
             </div>
-            <div class="form-group">
-                <label for="country">Country</label>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="country" style="display: block; margin-bottom: 5px;">Country</label>
                 {{ form.country }}
             </div>
-            <div class="form-group">
-                <label for="zip">ZIP Code</label>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="zip" style="display: block; margin-bottom: 5px;">ZIP Code</label>
                 {{ form.zip }}
             </div>
-            <div class="form-group">
-                <label for="same_shipping_address">Same Shipping Address</label>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="same_shipping_address" style="display: block; margin-bottom: 5px;">Same Shipping Address</label>
                 {{ form.same_shipping_address }}
             </div>
-            <div class="form-group">
-                <label for="save_info">Save Info</label>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="save_info" style="display: block; margin-bottom: 5px;">Save Info</label>
                 {{ form.save_info }}
             </div>
             <button type="submit" class="btn">Place Order</button>

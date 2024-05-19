@@ -1,105 +1,207 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+        /* General Styles */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+
+        body {
+            font-family: "Arial", sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+            background: #f0f0f0;
+            color: #606468;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
         }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .header .auth-section {
+            display: flex;
+            align-items: center;
+        }
+
+        .header .auth-section p {
+            margin-right: 10px;
+            font-size: 16px;
+            color: #444;
+        }
+
+        .header .auth-section button {
+            background-color: #b5cd60;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .header .auth-section button:hover {
+            background: #16aa56;
+        }
+
         h1 {
             text-align: center;
             margin-bottom: 20px;
+            color: #444;
         }
+
+        .search-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-form input {
+            padding: 10px 16px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f9fa;
+            color: #888;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-between;
+        }
+
         .product-list {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-around;
+            width: 65%;
         }
+
         .product-item {
             background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin: 10px;
-            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin: 15px;
+            padding: 15px;
             width: 220px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             transition: transform 0.3s;
         }
+
         .product-item:hover {
             transform: scale(1.05);
         }
+
         .product-item img {
             max-width: 100%;
-            height: 200px;  /* Fixed height for consistency */
+            height: 200px;
             object-fit: cover;
             border-bottom: 1px solid #ddd;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
+
         .product-item h2 {
             font-size: 18px;
             margin: 10px 0;
+            color: #444;
         }
+
         .product-item p {
             margin: 5px 0;
+            color: #606468;
         }
+
         .product-item .price {
             font-size: 16px;
             color: #28a745;
             font-weight: bold;
         }
+
         .product-item .add-to-cart {
-            background-color: #28a745;
+            background-color: #b5cd60;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 15px;
             text-decoration: none;
             font-size: 14px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+            border-radius: 4px;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+            width: 100%;
         }
+
         .product-item .add-to-cart:hover {
-            background-color: #218838;
+            background: #16aa56;
         }
+
         .cart-summary {
             margin-top: 40px;
-            border-top: 1px solid #ddd;
-            padding-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            width: 32%; /* Increased width */
+            align-self: flex-start;
         }
+
         .cart-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
+            align-items: center;
+            padding: 10px; /* Added padding */
+            border-bottom: 1px solid #ddd; /* Added border for separation */
         }
+
         .cart-item img {
             max-width: 50px;
             height: auto;
         }
+
         .cart-item-details {
             flex: 1;
-            margin-left: 20px;
+            margin-left: 10px;
         }
+
         .cart-item-details h2 {
-            font-size: 16px;
+            font-size: 14px;
             margin: 0;
+            color: #444;
         }
+
         .cart-item-details p {
             margin: 5px 0;
+            color: #606468;
         }
+
         .cart-item-details .price {
-            font-size: 14px;
+            font-size: 12px;
             color: #28a745;
             font-weight: bold;
         }
+
         .cart-item .remove-from-cart {
             background-color: #dc3545;
             color: white;
@@ -108,21 +210,25 @@
             text-decoration: none;
             font-size: 12px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 4px;
             transition: background-color 0.3s;
         }
+
         .cart-item .remove-from-cart:hover {
             background-color: #c82333;
         }
+
         .order-total {
             text-align: right;
-            margin-top: 20px;
+            margin-top: 10px;
         }
+
         .order-total .price {
-            font-size: 18px;
+            font-size: 16px;
             color: #28a745;
             font-weight: bold;
         }
+
         .checkout-btn {
             background-color: #007bff;
             color: white;
@@ -131,56 +237,91 @@
             text-decoration: none;
             font-size: 14px;
             cursor: pointer;
-            border-radius: 5px;
+            border-radius: 4px;
             transition: background-color 0.3s;
+            width: 100%;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
         }
-        .checkout-btn:hover {
+
+        .checkout-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .checkout-btn:hover:enabled {
             background-color: #0056b3;
         }
     </style>
+    <script>
+        function searchProducts() {
+            const query = document.getElementById('search-query').value;
+            fetch(`/products/?q=${query}`, {
+                headers: {
+                    'x-requested-with': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('product-list').innerHTML = data.html;
+            });
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>Product List</h1>
-        <div class="product-list">
-            {% for product in products %}
-                <div class="product-item">
-                    <img src="{{ product.image.url }}" alt="{{ product.title }}">
-                    <h2>{{ product.title }}</h2>
-                    <p>{{ product.description_short }}</p>
-                    <p class="price">${{ product.price }}</p>
-                    <form action="{% url 'products:add-to-cart' product.pk %}" method="POST">
+        <div class="header">
+            {% if user.is_authenticated %}
+                {% load custom_filters %} 
+                <div class="auth-section">
+                    <p>Logged in as {{ user.email|username_part }}!</p>
+                    <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
-                        <button type="submit" class="add-to-cart">Add to Cart</button>
+                        <button type="submit">Logout</button>
                     </form>
                 </div>
-            {% endfor %}
+            {% endif %}
         </div>
-        {% if order %}
-            <div class="cart-summary">
-                <h2>Your Cart</h2>
-                {% for order_item in order.items.all %}
-                    <div class="cart-item">
-                        <img src="{{ order_item.item.image.url }}" alt="{{ order_item.item.title }}">
-                        <div class="cart-item-details">
-                            <h2>{{ order_item.item.title }}</h2>
-                            <p>Quantity: {{ order_item.quantity }}</p>
-                            <p class="price">${{ order_item.get_total_item_price }}</p>
-                        </div>
-                        <form action="{% url 'products:remove-from-cart' order_item.item.pk %}" method="POST">
-                            {% csrf_token %}
-                            <button type="submit" class="remove-from-cart">Remove</button>
-                        </form>
-                    </div>
-                {% endfor %}
-                <div class="order-total">
-                    <p>Total: <span class="price">${{ order.get_total }}</span></p>
-                </div>
-                <div style="text-align: right;">
-                    <a href="{% url 'products:checkout' %}" class="checkout-btn">Proceed to Checkout</a>
-                </div>
+        <h1>Product List</h1>
+        <div class="search-form">
+            <input type="text" id="search-query" onkeyup="searchProducts()" placeholder="Search for products...">
+        </div>
+        <div class="content">
+            <div id="product-list">
+                {% include 'partials/product_list_partial.html' %}
             </div>
-        {% endif %}
+            {% if order and order.items.exists %}
+                <div class="cart-summary">
+                    <h2>Your Cart</h2>
+                    {% for order_item in order.items.all %}
+                        <div class="cart-item">
+                            <img src="{{ order_item.item.image.url }}" alt="{{ order_item.item.title }}">
+                            <div class="cart-item-details">
+                                <h2>{{ order_item.item.title }}</h2>
+                                <p>Quantity: {{ order_item.quantity }}</p>
+                                <p class="price">${{ order_item.get_total_item_price }}</p>
+                            </div>
+                            <form action="{% url 'products:remove-from-cart' order_item.item.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="remove-from-cart">Remove</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                    <div class="order-total">
+                        <p>Total: <span class="price">${{ order.get_total }}</span></p>
+                    </div>
+                    <div>
+                        <a href="{% url 'products:checkout' %}" class="checkout-btn" {% if order.get_total == 0 %}disabled{% endif %}>Proceed to Checkout</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="cart-summary">
+                    <h2>Your Cart</h2>
+                    <p>Your cart is empty.</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>
