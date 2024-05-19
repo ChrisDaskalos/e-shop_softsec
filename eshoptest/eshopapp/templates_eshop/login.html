@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Pepshop.gr - Login</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700">
     <style>
         body {
@@ -15,28 +15,21 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-
-        input {
-            border: none;
-            font-family: 'Open Sans', Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5em;
-            padding: 0;
-            -webkit-appearance: none;
+            position: relative;
         }
 
         #login {
-            width: 320px;
+            width: 360px;
+            margin: 0 auto;
         }
 
         #login form {
-            padding: 22px;
+            padding: 30px;
             width: 100%;
-            border-radius: 5px;
+            border-radius: 8px;
             background: #fff;
-            border-top: 3px solid #b5cd60;
-            border-bottom: 3px solid #b5cd60;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,29 +38,36 @@
         #login form h2 {
             margin-bottom: 20px;
             color: #444;
+            font-size: 24px;
         }
 
         #login form p {
             width: 100%;
-            margin-bottom: 1em;
+            margin-bottom: 20px;
         }
 
         #login form label {
             display: block;
-            margin-bottom: 0.5em;
+            margin-bottom: 8px;
             color: #606468;
         }
 
         #login form input[type="text"],
         #login form input[type="password"],
         #login form button[type="submit"] {
-            background-color: #f0f0f0;
+            background-color: #f8f9fa;
             border-radius: 4px;
-            color: #606468;
-            padding: 0 16px;
-            width: 90%; /* Reduced width */
-            height: 40px; /* Reduced height */
-            max-width: 280px; /* Ensure max width */
+            color: #444;
+            padding: 10px 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        #login form input[type="text"],
+        #login form input[type="password"] {
+            margin-bottom: 15px;
+            font-size: 16px;
         }
 
         #login form button[type="submit"] {
@@ -78,19 +78,61 @@
             transition: background 0.3s ease-in-out;
             font-size: 18px;
             font-weight: bold;
-            margin-top: 10px; /* Add margin top */
+            margin-top: 20px;
         }
 
         #login form button[type="submit"]:hover {
             background: #16aa56;
         }
+
+        .site-title {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+            font-size: 25px;
+            font-weight: bold;
+            margin-left: 50px; /* Adjust this value to move the title to the right */
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const messages = document.querySelectorAll('.error-message');
+                messages.forEach(function(message) {
+                    message.style.display = 'none';
+                });
+            }, 5000); // 5 seconds
+        });
+    </script>
 </head>
 <body>
     <div id="login">
+        <h1 class="site-title">Welcome to Pepshop.gr</h1>
         <form method="post" action="{% url 'login' %}">
             {% csrf_token %}
             <h2>Login</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    {% if 'login-error' in message.tags %}
+                        <div class="error-message">Invalid Email or Password.</div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
             <p>
                 <label for="id_username">Email address:</label>
                 {{ login_form.username }}
@@ -102,5 +144,6 @@
             <button type="submit" name="login">Login</button>
         </form>
     </div>
+    <footer>&copy; Team Nio</footer>
 </body>
 </html>

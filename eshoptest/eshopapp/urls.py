@@ -1,7 +1,7 @@
 # eshopapp/urls.py
 
 from django.urls import path
-from .views import login_view, logout_view, welcome_view
+from .views import login_view, logout_view
 from products.views import (
     OrderSummaryView,
     ItemDetailView,
@@ -14,7 +14,6 @@ from products.views import (
 urlpatterns = [
     path('', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
-    path('welcome/', welcome_view, name='welcome'),
     path('checkout/', checkout_view, name='checkout'),
     path('product/<slug>/', ItemDetailView.as_view(), name='product'),
     path('add-to-cart/<slug>/', add_to_cart, name='add-to-cart'),

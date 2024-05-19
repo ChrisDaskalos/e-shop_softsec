@@ -275,7 +275,7 @@
             {% if user.is_authenticated %}
                 {% load custom_filters %} 
                 <div class="auth-section">
-                    <p>Logged in as {{ user.email|username_part }}!</p>
+                    <p>Logged in as {{ user.email|username_part }}</p>
                     <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit">Logout</button>
