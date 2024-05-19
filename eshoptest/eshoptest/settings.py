@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'eshoptest.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+#
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -160,3 +160,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents the browser from MIME-sniffing a 
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email settings for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

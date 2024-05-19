@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="confirmation-box" style="padding: 20px; max-width: 600px; text-align: center; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 10px; background-color: #fff;">
+        <h1>Order Confirmation</h1>
+        <p>Thank you for your order!</p>
+        <h3>Order Summary</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+            {% for order_item in order.items.all %}
+                <tr style="border-bottom: 1px solid #e0e0e0;">
+                    <td style="padding: 10px; text-align: left;">{{ order_item.item.title }} ({{ order_item.quantity }})</td>
+                    <td style="padding: 10px; text-align: right;">${{ order_item.get_total_item_price }}</td>
+                </tr>
+            {% endfor %}
+            <tr style="font-weight: bold;">
+                <td style="padding: 10px; text-align: left;">Total:</td>
+                <td style="padding: 10px; text-align: right;">${{ order.get_total }}</td>
+            </tr>
+        </table>
+        <h3>Billing Details</h3>
+        <p style="text-align: left;">
+            {{ order.billing_address.street_address }}<br>
+            {{ order.billing_address.apartment_address }}<br>
+            {{ order.billing_address.country }}<br>
+            {{ order.billing_address.zip }}
+        </p>
+        <a href="{% url 'products:product_list' %}" class="btn" style="margin-top: 20px; display: inline-block; padding: 10px 20px; background-color: #8bc34a; color: #fff; text-decoration: none; border-radius: 5px;">Continue Shopping</a>
+    </div>
+{% endblock %}

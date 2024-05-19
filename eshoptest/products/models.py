@@ -1,5 +1,3 @@
-# products/models.py
-
 from django.conf import settings
 from django.db import models
 from django.shortcuts import reverse
@@ -11,6 +9,9 @@ ADDRESS_CHOICES = (
 )
 
 class Item(models.Model):
+    """
+    Model representing an item available for purchase.
+    """
     title = models.CharField(max_length=100)
     price = models.FloatField()
     description_short = models.CharField(max_length=50)
@@ -30,7 +31,11 @@ class Item(models.Model):
     def get_remove_from_cart_url(self):
         return reverse("core:remove-from-cart", kwargs={'slug': self.slug})
 
+
 class OrderItem(models.Model):
+    """
+    Model representing an individual item within an order.
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)
@@ -43,7 +48,11 @@ class OrderItem(models.Model):
     def get_total_item_price(self):
         return self.quantity * self.item.price
 
+
 class Order(models.Model):
+    """
+    Model representing an order.
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     ref_code = models.CharField(max_length=20)
@@ -65,7 +74,11 @@ class Order(models.Model):
             total += order_item.get_total_item_price()
         return total
 
+
 class BillingAddress(models.Model):
+    """
+    Model representing a billing address.
+    """
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)

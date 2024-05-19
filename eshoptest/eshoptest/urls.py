@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('eshopapp.urls')),  # Main app URLs
     path('products/', include('products.urls', namespace='products')),  # Products app URLs
-    path('login/', eshopapp_views.unified_view, name='login'),  # Login view URL
+    path('login/', eshopapp_views.login_view, name='login'),  # Login view URL
 ]
 
 # Add this line to serve media files during development
