@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'products',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,7 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_ratelimit.middleware.RatelimitMiddleware',
 ]
+
+RATELIMIT_VIEW = 'eshopapp.views.ratelimit_exceeded'
 
 ROOT_URLCONF = 'eshoptest.urls'
 
@@ -148,6 +152,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Ensure HTTPS is used and cookies are only sent over HTTPS
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_AGE = 1209600 # 2 week span
+CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 

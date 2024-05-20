@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django_ratelimit.decorators import ratelimit
 
+
+@ratelimit(key='ip', rate='4/m', block=True, method='POST')
 def login_view(request):
     """
     Display the view for logging in users.
@@ -32,6 +34,7 @@ def login_view(request):
     return render(request, 'login.html', {
         'login_form': login_form,
     })
+
 
 def logout_view(request):
     """
