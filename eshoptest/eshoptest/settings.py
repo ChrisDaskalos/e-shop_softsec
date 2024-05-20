@@ -40,10 +40,12 @@ INSTALLED_APPS = [
     'sslserver',
     'eshopapp',
     'products',
+    'csp',
 ]
 
 
 MIDDLEWARE = [
+    'csp.middleware.CSPMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -51,7 +53,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_ratelimit.middleware.RatelimitMiddleware',
+    'django_ratelimit.middleware.RatelimitMiddleware',   
+    # 'eshopapp.custom_middleware.XSSProtectionMiddleware'
 ]
 
 RATELIMIT_VIEW = 'eshopapp.views.ratelimit_exceeded'
@@ -73,7 +76,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 
 WSGI_APPLICATION = 'eshoptest.wsgi.application'
@@ -166,6 +168,19 @@ X_FRAME_OPTIONS = 'DENY'  # Protects against clickjacking
 SECURE_BROWSER_XSS_FILTER = True  # Enables the X-XSS-Protection header in browsers
 SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents the browser from MIME-sniffing a response away from the declared content-type
 
+# CSP Configurations
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'", 'https://fonts.googleapis.com/')
+CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com/')
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'", "data:", "/media/")
+# CSP_STYLE_SRC_ATTR = ("'self'", "'unsafe-inline'")
+# CSP_SCRIPT_SRC_ATTR = ("'self'", "'unsafe-inline'")
+CSP_INCLUDE_NONCE_IN = ['script-src']
+CSP_CONNECT_SRC = ("'self'",)
+CSP_FRAME_SRC = ("'self'",)
+CSP_CHILD_SRC = ("'self'",)
+CSP_REPORT_ONLY = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
