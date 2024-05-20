@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'products',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -50,7 +51,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_ratelimit.middleware.RatelimitMiddleware',
 ]
+
+RATELIMIT_VIEW = 'eshopapp.views.ratelimit_exceeded'
 
 ROOT_URLCONF = 'eshoptest.urls'
 
@@ -110,6 +114,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Default password hasher
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+]
+
 AUTH_USER_MODEL = 'eshopapp.CustomUser'
 # eshoptest/settings.py
 
@@ -142,6 +151,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SECURITY SETTINGS FOR HTTPS
 # Ensure HTTPS is used and cookies are only sent over HTTPS
 SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_AGE = 1209600 # 2 week span
+CSRF_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 
@@ -163,3 +174,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings for development
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Paths to your SSL certificate and key
+SSL_CERTIFICATE = os.path.join(BASE_DIR, 'ssl', 'development.crt')
+SSL_KEY = os.path.join(BASE_DIR, 'ssl', 'development.key')

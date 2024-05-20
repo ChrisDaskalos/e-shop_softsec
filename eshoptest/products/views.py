@@ -12,7 +12,8 @@ from django.template.loader import render_to_string
 from django.http import JsonResponse
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+
+from eshopapp.models import CustomUser  
 
 
 @login_required
@@ -111,14 +112,16 @@ def checkout_view(request):
             order.ordered = True
             order.ordered_date = timezone.now()
             order.save()
-
-            # Send confirmation email
-            subject = 'Order Confirmation'
-            plain_message = 'Thank you for your order!'
-            from_email = 'from@example.com'
-            to_email = user.email
-            html_message = render_to_string('order_confirmation_email.html', {'order': order})
-            send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
+           
+            admin_users = CustomUser.objects.filter(is_staff=True, is_superuser=True)
+            for admin_user in admin_users:
+                # Send confirmation email
+                subject = 'Order Confirmation'
+                plain_message = 'New order created.'
+                from_email = 'from@example.com'
+                to_email = admin_user.email
+                html_message = render_to_string('order_confirmation_email.html', {'order': order})
+                send_mail(subject, plain_message, from_email, [to_email], html_message=html_message)
 
             return redirect('products:order_confirmation')
     else:

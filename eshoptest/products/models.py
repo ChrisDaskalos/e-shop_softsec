@@ -84,7 +84,7 @@ class BillingAddress(models.Model):
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
     country = models.CharField(max_length=100)
-    zip = models.CharField(max_length=100)
+    zip = models.IntegerField()
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
 
