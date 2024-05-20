@@ -69,7 +69,7 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/`
 
-![alt text](image-1.png)
+![alt text](assets/images/image-1.png)
 
 **Description:** This is the landing page where users can log in to their accounts.
 
