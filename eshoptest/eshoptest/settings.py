@@ -191,5 +191,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Paths to your SSL certificate and key
-SSL_CERTIFICATE = os.path.join(BASE_DIR, 'ssl', 'development.crt')
-SSL_KEY = os.path.join(BASE_DIR, 'ssl', 'development.key')
+SSL_CERTIFICATE = os.path.join(BASE_DIR, 'ssl', 'localhost+2.pem')
+SSL_KEY = os.path.join(BASE_DIR, 'ssl', 'localhost+2-key.pem')
