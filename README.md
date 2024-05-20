@@ -38,18 +38,15 @@ What things you need to install the software:
    
     `pip install -r requirements.txt`
 
-4. **Migrate the database:**
+5. **Migrate the database:**
 
     `python manage.py migrate`
 
-5. **Run the development server:**
-   
-   `python manage.py runserver`
 
-6. **Run the ssl server:**
-    Before running the SSL server, make sure you have SSL certificates (development.crt and development.key) placed in the ssl directory of your project.
+5. **Run the ssl server:**
+    Before running the SSL server, make sure you have SSL certificates placed in the ssl directory of your project.
 
-    `python manage.py runsslserver --certificate ssl/development.crt --key ssl/development.key`
+    `python manage.py runsslserver`
 
 
 
