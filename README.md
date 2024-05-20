@@ -68,6 +68,7 @@ Below is a list of all the available pages in the e-shop project:
 ### 1. Login Page
 
 **URL:** `/`
+
 ![alt text](image-1.png)
 
 **Description:** This is the landing page where users can log in to their accounts.
@@ -75,19 +76,25 @@ Below is a list of all the available pages in the e-shop project:
 ### 2. Product Catalogue Page
 
 **URL:** `/products/`
+
 ![alt text](image-2.png)
+
 ![alt text](image-3.png)
+
 **Description:** Displays the product catalogue available to authenticated users. Users can search for products and add them to their cart.
 
 ### 3. Add to Cart
 
 **URL:** `/add_to_cart/<product_id>/`
+
 ![alt text](image-4.png)
+
 **Description:** Adds a selected product to the user's shopping cart.
 
 ### 4. Cart and Checkout Page
 
 **URL:** `/checkout/`
+
 ![alt text](image-5.png)
 
 **Description:** Shows the items in the user's cart and allows them to enter their shipping information. Users can review their order details and submit the order.
@@ -95,6 +102,7 @@ Below is a list of all the available pages in the e-shop project:
 ### 5. Order Summary Page
 
 **URL:** `/order_summary/`
+
 ![alt text](image-6.png)
 
 **Description:** Provides a summary of the user's order before final submission.
@@ -102,12 +110,16 @@ Below is a list of all the available pages in the e-shop project:
 ### 6. Order Confirmation Page
 
 **URL:** `/order_confirmation/`
+
 ![alt text](image-7.png)
+
 **Description:** Displays the confirmation of the user's order once it has been successfully placed.
 
 ### 7. Logout
 
 **URL:** `/logout/`
+
+![alt text](image-8.png)
 
 **Description:** Logs the user out and redirects them to the login page.
 
