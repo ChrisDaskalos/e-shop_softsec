@@ -69,7 +69,9 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/`
 
-![alt text](assets/images/image-1.png)
+<p align="center">
+  <img src="assets/images/image-1.png" alt="Login Page">
+</p>
 
 **Description:** This is the landing page where users can log in to their accounts.
 
@@ -77,9 +79,10 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/products/`
 
-![alt text](assets/images/image-2.png)
-
-![alt text](assets/images/image-3.png)
+<p align="center">
+  <img src="assets/images/image-2.png" alt="Product Catalogue Page">
+  <img src="assets/images/image-3.png" alt="Product Catalogue Page">
+</p>
 
 **Description:** Displays the product catalogue available to authenticated users. Users can search for products and add them to their cart.
 
@@ -87,7 +90,9 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/add_to_cart/<product_id>/`
 
-![alt text](assets/images/image-4.png)
+<p align="center">
+  <img src="assets/images/image-4.png" alt="Add to Cart">
+</p>
 
 **Description:** Adds a selected product to the user's shopping cart.
 
@@ -95,7 +100,9 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/checkout/`
 
-![alt text](assets/images/image-5.png)
+<p align="center">
+  <img src="assets/images/image-5.png" alt="Cart and Checkout Page">
+</p>
 
 **Description:** Shows the items in the user's cart and allows them to enter their shipping information. Users can review their order details and submit the order.
 
@@ -103,7 +110,9 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/order_summary/`
 
-![alt text](assets/images/image-6.png)
+<p align="center">
+  <img src="assets/images/image-6.png" alt="Order Summary Page">
+</p>
 
 **Description:** Provides a summary of the user's order before final submission.
 
@@ -111,7 +120,9 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/order_confirmation/`
 
-![alt text](assets/images/image-7.png)
+<p align="center">
+  <img src="assets/images/image-7.png" alt="Order Confirmation Page">
+</p>
 
 **Description:** Displays the confirmation of the user's order once it has been successfully placed.
 
@@ -119,26 +130,25 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/logout/`
 
-![alt text](assets/images/image-8.png)
+<p align="center">
+  <img src="assets/images/image-8.png" alt="Logout">
+</p>
 
 **Description:** Logs the user out and redirects them to the login page.
+
 
 ## Security Features
 
 The e-shop project implements several security features:
 
-1. **HTTPS Only:** All content is available only via HTTPS.
-2. **Secure Cookies:** Session and CSRF cookies are configured to be secure.
-3. **HTTPOnly Cookies:** Cookies are marked as HTTPOnly to prevent JavaScript access.
-4. **CSRF Protection:** Cross-Site Request Forgery protection is enabled.
-5. **Rate Limiting:** Rate limiting is implemented on login attempts.
-6. **Content Security Policy (CSP):** The application has a Content Security Policy to mitigate XSS attacks.
-7. **HSTS:** HTTP Strict Transport Security is enforced to ensure all communication is over HTTPS.
 
-## Development
-
-### Running the Development Server
-
-To start the development server, use:
-
-`python manage.py runsslserver`
+**HTTPS Only:** All content is available only via HTTPS.
+**Secure Cookies:** Session and CSRF cookies are configured to be secure.
+**CSRF Protection:** Cross-Site Request Forgery protection is enabled.
+**Rate Limiting:** Rate limiting is implemented on login attempts.
+**Content Security Policy (CSP):** The application has a Content Security Policy to mitigate XSS attacks.
+**HSTS:** HTTP Strict Transport Security is enforced to ensure all communication is over HTTPS.
+**SQL Injection Prevention Mechanisms:** Django ORM query operations and other integrated security measures prevent SQL injection.
+**HTML Escaping:** HTML content is escaped to prevent XSS attacks.
+**SameSite Cookies:** The SameSite attribute is applied to cookies to prevent CSRF attacks.
+**Django Integrated Security Measures:** Additional security measures provided by Django to tackle various threats.
