@@ -110,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Default password hasher
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+]
+
 AUTH_USER_MODEL = 'eshopapp.CustomUser'
 # eshoptest/settings.py
 
@@ -142,6 +147,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # SECURITY SETTINGS FOR HTTPS
 # Ensure HTTPS is used and cookies are only sent over HTTPS
 SESSION_COOKIE_SECURE = True
+SESSUIB_COOKIE_AGE = 1209600 # 2 week span
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 
