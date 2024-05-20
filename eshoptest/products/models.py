@@ -83,8 +83,8 @@ class BillingAddress(models.Model):
                              on_delete=models.CASCADE)
     street_address = models.CharField(max_length=100)
     apartment_address = models.CharField(max_length=100)
-    country = models.CharField(max_length=20)
-    zip = models.IntegerField(max_length=5)
+    country = models.CharField(max_length=100)
+    zip = models.IntegerField()
     address_type = models.CharField(max_length=1, choices=ADDRESS_CHOICES)
     default = models.BooleanField(default=False)
 

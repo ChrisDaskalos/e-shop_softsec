@@ -13,9 +13,7 @@ What things you need to install the software:
 
 - Python 3.11.2
 - PostgreSQL 13+ (psqlODBC)
-- Node.js 12.x+
 - pgAdmin 8.6
-- Angular CLI
 
 
 ### Installing
@@ -31,7 +29,10 @@ What things you need to install the software:
 2. **Set up a virtual environment:**
 
     `python -m venv venv`
-    `source venv/bin/activate`  # On Windows use `venv\Scripts\activate`
+    `source venv/bin/activate`  
+     
+    **On Windows use:**
+    `venv\Scripts\activate`
 
 3. **Install the required Python packages:**
    
@@ -46,8 +47,9 @@ What things you need to install the software:
    `python manage.py runserver`
 
 6. **Run the ssl server:**
+    Before running the SSL server, make sure you have SSL certificates (development.crt and development.key) placed in the ssl directory of your project.
 
-    `python manage.py runsslserver`
+    `python manage.py runsslserver --certificate ssl/development.crt --key ssl/development.key`
 
 
 
