@@ -119,7 +119,7 @@ Below is a list of all the available pages in the e-shop project:
 
 **URL:** `/logout/`
 
-![alt text](assets/images/image.png)
+![alt text](assets/images/image-8.png)
 
 **Description:** Logs the user out and redirects them to the login page.
 
